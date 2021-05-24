@@ -18,9 +18,13 @@
     "vue-google-signin-button": "^1.0.4"
   },
   "devDependencies": {
+    "@nuxtjs/tailwindcss": "^4.1.2",
     "@nuxtjs/vuetify": "^1.11.3",
+    "autoprefixer": "^9.8.6",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",
-    "prettier": "^2.2.1"
+    "postcss": "^7.0.35",
+    "prettier": "^2.2.1",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.2"
   }
 }

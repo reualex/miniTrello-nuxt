@@ -2,7 +2,6 @@
   <div class="container">
     Home
     <hr />
-    <nuxt-link to="/login">Login page</nuxt-link>
   </div>
 </template>
 

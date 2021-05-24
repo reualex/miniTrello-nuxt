@@ -1,0 +1,46 @@
+a {
+  text-decoration: none;
+}
+
+.h2 {
+  color: #353535;
+  font-weight: 500;
+  font-size: 56px;
+  @media (max-width: 1536px) {
+    font-size: 36px;
+  }
+}
+.h2-lg {
+  color: #353535;
+  font-weight: 500;
+  font-size: 56px;
+  @media (max-width: 1280px) {
+    font-size: 36px;
+  }
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: #8bc4f7;
+  cursor: pointer;
+  position: relative;
+
+  &_sm {
+    width: 32px;
+    height: 32px;
+  }
+
+  img {
+    border-radius: 50%;
+  }
+
+  div {
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
