@@ -1,5 +1,5 @@
 <template>
-  <div>222</div>
+  <div>{{ currentBoard.name }}</div>
 </template>
 
 <script>
@@ -7,13 +7,17 @@ export default {
   data() {
     return {
       boardId: this.$route.params.id,
-      //   board: this.$store.getters[('boards/getCurrentBoard', this.boardId)],
     }
+  },
+  computed: {
+    currentBoard() {
+      return this.$store.getters['boards/getCurrentBoard'](this.boardId)
+    },
   },
   mounted() {
     console.log(
       'getters: ',
-      this.$store.getters[('boards/getCurrentBoard', boardId)]
+      this.$store.getters['boards/getCurrentBoard'](this.boardId)
     )
   },
 }

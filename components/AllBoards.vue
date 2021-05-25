@@ -1,9 +1,20 @@
 <template>
   <div class="container all-boards">
     <ul>
-      <li class="card" v-for="board in allBoards">
+      <li v-for="board in allBoards" :key="board.id">
         <nuxt-link :to="'/board/' + board.id">
-          {{ board.name }}
+          <v-card elevation="3" class="mb-5 px-8 py-12">
+            <div class="content flex justify-between">
+              <p>
+                {{ board.name }}
+              </p>
+              <span
+                class="delete-btn"
+                @click.prevent="$store.commit('boards/removeBoard', board.id)"
+                >X</span
+              >
+            </div>
+          </v-card>
         </nuxt-link>
       </li>
     </ul>
@@ -20,3 +31,13 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+.delete-btn {
+  width: 32px;
+  height: 32px;
+  z-index: 20;
+  line-height: 32px;
+  text-align: center;
+}
+</style>

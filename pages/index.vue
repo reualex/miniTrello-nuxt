@@ -15,6 +15,7 @@
       />
       <v-btn @click="addBoard">Add</v-btn>
     </div>
+    <p>Total board: {{ boardsLength }}</p>
   </div>
 </template>
 
@@ -30,8 +31,12 @@ export default {
   data() {
     return {
       boardName: '',
-      boardsLength: this.$store.state.boards.list.length,
     }
+  },
+  computed: {
+    boardsLength() {
+      return this.$store.state.boards.list.length
+    },
   },
   components: {
     AllBoards,
@@ -43,7 +48,9 @@ export default {
     addBoard() {
       this.$store.commit('boards/addBoard', {
         name: this.boardName,
-        id: this.boardsLength || '0',
+        id: `${this.boardsLength || 0}${Math.floor(
+          Math.random() * (999 - 100) + 100
+        )}`,
       })
       this.boardName = ''
     },
