@@ -2,13 +2,26 @@ export const state = () => ({
   list: [],
 })
 
+export const actions = {
+  addBoard({ commit }, newBoard) {
+    commit('addBoard', newBoard)
+  },
+  addTaskToBoard({ commit }, newColumn) {
+    commit('addTaskToBoard', newColumn)
+  },
+}
+
 export const mutations = {
   addBoard(state, newBoard) {
     state.list.push(newBoard)
   },
 
-  addTaskToBoard(board_id) {
-    const board = state.getters.getCurrentBoard(board_id)
+  addTaskToBoard(state, newColumn) {
+    const currentBoard = state.list.find(
+      el => el.id.toString() === newColumn.boardId.toString()
+    )
+    if (!currentBoard.columns) currentBoard.columns = []
+    currentBoard.columns.push(newColumn)
   },
 
   removeBoard(state, board_id) {

@@ -46,12 +46,13 @@ export default {
   },
   methods: {
     addBoard() {
-      this.$store.commit('boards/addBoard', {
-        name: this.boardName,
-        id: `${this.boardsLength || 0}${Math.floor(
-          Math.random() * (999 - 100) + 100
-        )}`,
-      })
+      this.boardName.trim() &&
+        this.$store.dispatch('boards/addBoard', {
+          name: this.boardName,
+          id: `${this.boardsLength || 0}${Math.floor(
+            Math.random() * (999 - 100) + 100
+          )}`,
+        })
       this.boardName = ''
     },
   },
