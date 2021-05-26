@@ -33,7 +33,7 @@
       </li>
     </ul>
     <span v-else>Nothing column, create new</span>
-
+    <!--
     <div class="column-form">
       <label for="newColumn" class="mr-4">Create new column:</label>
       <input
@@ -43,12 +43,28 @@
         placeholder="please, enter board name"
       />
       <v-btn @click="addColumn">Add</v-btn>
-    </div>
+    </div> -->
+    <form class="column-form" @submit.prevent="addColumn">
+      <BasicInput
+        v-model="columnName"
+        label="New Column"
+        placeholder="Enter your column name"
+        name="columnName"
+        type="text"
+        class="mb-9 max-w-sm"
+      />
+      <v-btn type="submit">Add</v-btn>
+    </form>
   </div>
 </template>
 
 <script>
+import BasicInput from '~/components/BasicInput'
 export default {
+  name: 'CurrentBoard',
+  components: {
+    BasicInput,
+  },
   data() {
     return {
       boardId: this.$route.params.id,
@@ -57,7 +73,7 @@ export default {
     }
   },
   methods: {
-    addColumn() {
+    addColumn(e) {
       const date = new Date()
       this.columnName.trim() &&
         this.$store.dispatch('boards/addColumnToBoard', {
@@ -67,7 +83,7 @@ export default {
             date.getMinutes() + date.getSeconds() + date.getMilliseconds()
           ),
         })
-      this.columnName = ''
+      // e.target.reset()
     },
     addTask(columnId) {
       const date = new Date()
