@@ -24,7 +24,7 @@
 
 <script>
 import AllBoards from '~/components/AllBoards'
-import BasicInput from '~/components/BasicInput'
+import BasicInput from '~/components/Common/BasicInput'
 export default {
   name: 'Home',
   middleware: 'auth',

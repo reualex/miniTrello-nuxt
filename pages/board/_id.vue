@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import BasicInput from '~/components/BasicInput'
+import BasicInput from '~/components/Common/BasicInput'
 export default {
   name: 'CurrentBoard',
   data() {
