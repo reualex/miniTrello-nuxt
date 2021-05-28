@@ -9,9 +9,9 @@ export const actions = {
   addColumnToBoard({ commit }, newColumn) {
     commit('addColumnToBoard', newColumn)
   },
-  addNewTask({commit}, newTask) {
+  addNewTask({ commit }, newTask) {
     commit('addNewTask', newTask)
-  }
+  },
 }
 
 export const mutations = {
@@ -23,7 +23,6 @@ export const mutations = {
     const currentBoard = state.list.find(
       el => el.id.toString() === newColumn.boardId.toString()
     )
-    if (!currentBoard.columns) currentBoard.columns = []
     currentBoard.columns.push(newColumn)
   },
 
@@ -37,17 +36,19 @@ export const mutations = {
   },
 
   addNewTask(state, newTask) {
-  const currentBoard = state.list.find(el => el.id.toString() === newTask.boardId.toString())
-  const currentColumn = currentBoard.columns.find((col) => col.id.toString() === newTask.columnId)
-  // !currentColumn.tasks && currentColumn.tasks = []
-  if (!('tasks' in currentColumn)) currentColumn.tasks = []
+    const currentBoard = state.list.find(
+      el => el.id.toString() === newTask.boardId.toString()
+    )
+    const currentColumn = currentBoard.columns.find(
+      col => col.id.toString() === newTask.columnId
+    )
+    // !currentColumn.tasks && currentColumn.tasks = []
+    if (!('tasks' in currentColumn)) currentColumn.tasks = []
 
-  currentColumn.tasks.push(newTask)
-  // console.log('Created TASK: ', currentColumn.tasks)
-  console.log('currentColumn: ', currentColumn)
-
-
-  }
+    currentColumn.tasks.push(newTask)
+    // console.log('Created TASK: ', currentColumn.tasks)
+    console.log('currentColumn: ', currentColumn)
+  },
 }
 
 export const getters = {

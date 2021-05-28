@@ -8,6 +8,7 @@
               <p>
                 {{ board.name }}
               </p>
+              <p>Total columns: {{ board.columns.length }}</p>
               <span
                 class="delete-btn"
                 @click.prevent="$store.commit('boards/removeBoard', board.id)"

@@ -55,6 +55,7 @@ export default {
       this.boardName.trim() &&
         this.$store.dispatch('boards/addBoard', {
           name: this.boardName,
+          columns: [],
           id: `${this.boardsLength || 0}${Math.floor(
             Math.random() * (999 - 100) + 100
           )}`,
