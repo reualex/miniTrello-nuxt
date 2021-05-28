@@ -30,6 +30,7 @@
 <script>
 import AppAvatar from '~/components/AppAvatar'
 export default {
+  name: 'AppHeader',
   components: {
     AppAvatar,
   },

@@ -14,6 +14,7 @@
 
 <script>
 export default {
+  name: 'BasicInput',
   props: {
     label: { type: String, default: '' },
     name: { type: String, default: '' },

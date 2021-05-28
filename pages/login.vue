@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  name: 'LoginPage',
+  name: 'Login',
   layout: 'empty',
   head() {
     return {
