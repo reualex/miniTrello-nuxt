@@ -18,13 +18,14 @@
       <v-btn type="submit">Add</v-btn>
     </form>
 
-    <p>Total board: {{ boardsLength }}</p>
+    <p>Total board: {{ boardsLengthState }}</p>
   </div>
 </template>
 
 <script>
 import AllBoards from '~/components/AllBoards'
 import BasicInput from '~/components/Common/BasicInput'
+import { mapActions, mapState } from 'vuex'
 export default {
   name: 'Home',
   middleware: 'auth',
@@ -39,9 +40,14 @@ export default {
     }
   },
   computed: {
-    boardsLength() {
-      return this.$store.state.boards.list.length
-    },
+    ...mapState({
+      boardsLengthState: state => state.boards.list.length,
+    }),
+  },
+  methods: {
+    ...mapActions({
+      addBoardAction: 'addBoard',
+    }),
   },
   components: {
     AllBoards,
@@ -50,13 +56,14 @@ export default {
 
   methods: {
     addBoard(e) {
+      console.log('addBoardAction: ', this.addBoardAction)
       this.boardName.trim() &&
-        this.$store.dispatch('boards/addBoard', {
+        this.addBoardAction({
           name: this.boardName,
           columns: [],
-          id: `${this.boardsLength || 0}${Math.floor(
+          id: `${this.boardsLengthState}${Math.floor(
             Math.random() * (999 - 100) + 100
-          )}`,
+          )}`, // uuid
         })
       e.target.reset()
     },

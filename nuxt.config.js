@@ -72,6 +72,7 @@ export default {
       },
     },
     redirect: {
+      login: '/',
       callback: '/login',
       logout: '/login',
     },

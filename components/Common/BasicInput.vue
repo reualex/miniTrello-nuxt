@@ -13,6 +13,7 @@
 </template>
 
 <script>
+// _uid
 export default {
   name: 'BasicInput',
   props: {

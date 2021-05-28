@@ -13,8 +13,9 @@
       >
         <p>{{ column.name }}</p>
 
-        <hr />
+        <hr class="border-indigo-100" />
 
+        <!-- TaskList.vue && TaskItem.vue -->
         <ul v-if="column.tasks.length" class="one-column-tasks">
           <li
             v-for="task in column.tasks"

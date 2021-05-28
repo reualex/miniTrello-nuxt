@@ -15,6 +15,7 @@ export default {
     fullName: { type: String, default: 'User' },
   },
   methods: {
+    // TODO: move to computed
     getInitials(name) {
       return name
         ?.split(' ')

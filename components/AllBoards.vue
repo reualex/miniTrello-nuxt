@@ -2,7 +2,7 @@
   <div class="container">
     <ul>
       <li v-for="board in allBoards" :key="board.id" class="current-board">
-        <nuxt-link :to="'/board/' + board.id">
+        <nuxt-link :to="`/board/${board.id}`">
           <v-card elevation="3" class="mb-5 px-8 py-12">
             <div class="content flex justify-between items-center">
               <p class="w-4/12 mr-2">
@@ -30,11 +30,12 @@ export default {
   name: 'AllBoards',
   data() {
     return {
-      allBoards: this.$store.state.boards.list,
+      allBoards: this.$store.state.boards.list, // computed MapState
     }
   },
   methods: {
     totalTasks(boardId) {
+      // COMPUTED => mapGetters
       return this.$store.getters['boards/getTotalTasks'](boardId)
     },
   },

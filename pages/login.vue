@@ -30,12 +30,12 @@ export default {
       try {
         await this.$auth.loginWith(methodType)
       } catch (error) {
-        console.log('Error: ', error)
+        console.error('Error: ', error)
       }
     },
   },
   mounted() {
-    this.$auth.loggedIn && this.$router.push('/')
+    // !this.$auth.loggedIn && this.$router.push('/')
   },
 }
 </script>
