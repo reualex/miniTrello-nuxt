@@ -42,12 +42,8 @@ export const mutations = {
     const currentColumn = currentBoard.columns.find(
       col => col.id.toString() === newTask.columnId
     )
-    // !currentColumn.tasks && currentColumn.tasks = []
-    if (!('tasks' in currentColumn)) currentColumn.tasks = []
 
     currentColumn.tasks.push(newTask)
-    // console.log('Created TASK: ', currentColumn.tasks)
-    console.log('currentColumn: ', currentColumn)
   },
 }
 

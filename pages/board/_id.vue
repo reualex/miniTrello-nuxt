@@ -13,11 +13,11 @@
         <hr />
 
         <ul v-if="tasks && tasks.length">
-          <li v-for="task in tasks">{{ task.name }}</li>
+          <li v-for="task in tasks" :key="task.id">{{ task.name }}</li>
         </ul>
         <span v-else>Nothing tasks</span>
         <!--
-        <div class="task-form">
+        <form class="task-form">
           <label :for="`newTask-${column.id}`" class="mr-4"
             >Create new column:</label
           >
@@ -28,7 +28,7 @@
             placeholder="please, enter task name"
           />
           <v-btn @click="addTask(column.id)">Add</v-btn>
-        </div>
+        </form>
         -->
       </li>
     </ul>
@@ -63,40 +63,36 @@ export default {
         this.$store.dispatch('boards/addColumnToBoard', {
           boardId: this.boardId,
           name: this.columnName,
+          tasks: [],
           id: String(
             date.getMinutes() + date.getSeconds() + date.getMilliseconds()
           ),
         })
       this.columnName = ''
     },
-    addTask(columnId) {
-      const date = new Date()
-      this.taskName.trim() &&
-        this.$store.dispatch('boards/addNewTask', {
-          columnId,
-          boardId: this.boardId,
-          name: this.taskName,
-          id: String(
-            date.getMinutes() + date.getSeconds() + date.getMilliseconds()
-          ),
-        })
-      this.columnName = ''
-    },
+    // addTask(columnId) {
+    //   const date = new Date()
+    //   this.taskName.trim() &&
+    //     this.$store.dispatch('boards/addNewTask', {
+    //       columnId,
+    //       boardId: this.boardId,
+    //       name: this.taskName,
+    //       id: String(
+    //         date.getMinutes() + date.getSeconds() + date.getMilliseconds()
+    //       ),
+    //     })
+    //   this.taskName = ''
+    // },
   },
   computed: {
     currentBoard() {
-      return (
-        this.$store.getters['boards/getCurrentBoard'](this.boardId) || {
-          name: '',
-        }
-      )
+      return this.$store.getters['boards/getCurrentBoard'](this.boardId)
     },
     tasks() {
       return this.currentBoard.tasks
     },
   },
   created() {
-    console.log('currentBoard: ', this.currentBoard)
     !this.currentBoard.id && this.$router.push('/')
   },
 }

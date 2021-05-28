@@ -6,7 +6,7 @@
     <div v-else>
       <h2 class="h2">Nothing board, create your first board:</h2>
     </div>
-    <div class="board-form">
+    <form class="board-form" @submit.prevent="addBoard">
       <BasicInput
         v-model="boardName"
         label="New Board"
@@ -15,8 +15,8 @@
         type="text"
         class="mb-9 max-w-sm"
       />
-      <v-btn @click="addBoard">Add</v-btn>
-    </div>
+      <v-btn type="submit">Add</v-btn>
+    </form>
 
     <p>Total board: {{ boardsLength }}</p>
   </div>
@@ -27,6 +27,7 @@ import AllBoards from '~/components/AllBoards'
 import BasicInput from '~/components/BasicInput'
 export default {
   name: 'Home',
+  middleware: 'auth',
   head() {
     return {
       title: `Home`,
@@ -46,12 +47,9 @@ export default {
     AllBoards,
     BasicInput,
   },
-  created() {
-    console.log('state: ', this.$store)
-  },
+
   methods: {
-    addBoard() {
-      console.log('boardName: ', this.boardName)
+    addBoard(e) {
       this.boardName.trim() &&
         this.$store.dispatch('boards/addBoard', {
           name: this.boardName,
@@ -60,7 +58,7 @@ export default {
             Math.random() * (999 - 100) + 100
           )}`,
         })
-      this.boardName = ''
+      e.target.reset()
     },
   },
 }

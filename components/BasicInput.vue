@@ -6,7 +6,6 @@
       :name="name"
       :type="type"
       :required="required"
-      v-model="inputModel"
       @input="$emit('input', $event.target.value)"
       class="pb-1 px-4"
     />
@@ -21,18 +20,6 @@ export default {
     type: { type: String, default: 'text' },
     required: { type: Boolean, default: true },
     placeholder: { type: String, default: '' },
-    method: { type: Function, default: () => {} },
-  },
-  data() {
-    return {
-      inputModel: this.value,
-    }
-  },
-  watch: {
-    inputModel: function (val) {
-      console.log('inputVal', val)
-      this.$emit('input', val)
-    },
   },
 }
 </script>

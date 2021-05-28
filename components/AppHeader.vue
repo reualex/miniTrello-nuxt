@@ -20,7 +20,7 @@
           >
         </div>
         <nuxt-link class="app-bar-buttons-login" v-else to="/login"
-          ><v-btn>Need login</v-btn></nuxt-link
+          ><v-btn>Login</v-btn></nuxt-link
         >
       </div>
     </div>
@@ -33,7 +33,6 @@ export default {
   components: {
     AppAvatar,
   },
-  methods: {},
 }
 </script>
 

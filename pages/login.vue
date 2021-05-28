@@ -4,12 +4,12 @@
       <img
         src="~/assets/png/google-icon.png"
         class="icon icon-google"
-        @click.prevent="loginGoogleClicked"
+        @click.prevent="loginClick('google')"
       />
 
       <img
         src="~/assets/png/github-icon.png"
-        @click.prevent="loginGitClicked"
+        @click.prevent="loginClick('github')"
         class="icon"
       />
     </div>
@@ -26,20 +26,11 @@ export default {
     }
   },
   methods: {
-    async loginGitClicked() {
+    async loginClick(methodType) {
       try {
-        let res = await this.$auth.loginWith('github')
-        console.log('login result: ', res)
-      } catch (err) {
-        console.log('login error: ', err)
-      }
-    },
-    async loginGoogleClicked() {
-      try {
-        let res = await this.$auth.loginWith('google')
-        console.log('login result: ', res)
-      } catch (err) {
-        console.log('login error: ', err)
+        await this.$auth.loginWith(methodType)
+      } catch (error) {
+        console.log('Error: ', error)
       }
     },
   },
