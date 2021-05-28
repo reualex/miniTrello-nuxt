@@ -51,4 +51,16 @@ export const getters = {
   getCurrentBoard: state => id => {
     return state.list.find(el => el.id.toString() === id.toString())
   },
+
+  getTotalTasks: state => boardId => {
+    let totalTasks = 0
+    const currentBoard = state.list.find(
+      el => el.id.toString() === boardId.toString()
+    )
+
+    currentBoard.columns.forEach(column => {
+      totalTasks += column.tasks.length
+    })
+    return totalTasks
+  },
 }

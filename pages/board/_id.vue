@@ -15,7 +15,7 @@
 
         <hr />
 
-        <ul v-if="column.tasks.length" class="py-4 one-column-tasks">
+        <ul v-if="column.tasks.length" class="one-column-tasks">
           <li
             v-for="task in column.tasks"
             :key="task.id"
@@ -89,7 +89,6 @@ export default {
       e.target.reset()
     },
     addTask(e, columnId) {
-      console.log('currentBoard: ', this.currentBoard)
       const date = new Date()
       this.taskName.trim() &&
         this.$store.dispatch('boards/addNewTask', {
@@ -117,7 +116,7 @@ export default {
 <style lang="scss">
 .one-column {
   @apply flex flex-col p-3;
-  min-width: 250px;
+  max-width: 300px;
   min-height: 500px;
   background: #efefef;
   &:not(:last-child) {
@@ -125,6 +124,7 @@ export default {
   }
 
   &-tasks {
+    @apply py-4;
     overflow-y: scroll;
     max-height: 300px;
     &::-webkit-scrollbar {
@@ -134,7 +134,6 @@ export default {
 }
 
 .task-form {
-  margin-top: auto;
-  margin-left: 10px;
+  @apply mt-auto;
 }
 </style>

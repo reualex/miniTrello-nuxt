@@ -5,10 +5,13 @@
         <nuxt-link :to="'/board/' + board.id">
           <v-card elevation="3" class="mb-5 px-8 py-12">
             <div class="content flex justify-between">
-              <p>
+              <p class="w-4/12 mr-2">
                 {{ board.name }}
               </p>
-              <p>Total columns: {{ board.columns.length }}</p>
+              <p class="w-3/12 mr-2">
+                Total columns: {{ board.columns.length }}
+              </p>
+              <p class="w-3/12">Total tasks: {{ totalTasks(board.id) }}</p>
               <span
                 class="delete-btn"
                 @click.prevent="$store.commit('boards/removeBoard', board.id)"
@@ -29,6 +32,11 @@ export default {
     return {
       allBoards: this.$store.state.boards.list,
     }
+  },
+  methods: {
+    totalTasks(boardId) {
+      return this.$store.getters['boards/getTotalTasks'](boardId)
+    },
   },
 }
 </script>
