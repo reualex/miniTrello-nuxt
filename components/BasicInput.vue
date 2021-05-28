@@ -27,7 +27,6 @@ export default {
 <style lang="scss">
 .basic-input {
   @apply w-full flex flex-col relative;
-  height: 100%;
 
   label {
     font-size: 12px;
