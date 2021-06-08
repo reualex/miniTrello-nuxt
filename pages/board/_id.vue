@@ -79,28 +79,24 @@ export default {
   methods: {
     ...mapActions('boards', ['addColumnToBoard', 'addNewTask']),
     addColumn(e) {
-      const date = new Date()
+      const newColumnID = this.$uuid.v4()
       this.columnName.trim() &&
         this.addColumnToBoard({
           boardId: this.boardId,
           name: this.columnName,
           tasks: [],
-          id: String(
-            date.getMinutes() + date.getSeconds() + date.getMilliseconds()
-          ),
+          id: newColumnID,
         })
       e.target.reset()
     },
     addTask(e, columnId) {
-      const date = new Date()
+      const newTaskID = this.$uuid.v4()
       this.taskName.trim() &&
         this.addNewTask({
           columnId,
           boardId: this.boardId,
           name: this.taskName,
-          id: String(
-            date.getMinutes() + date.getSeconds() + date.getMilliseconds()
-          ),
+          id: newTaskID,
         })
       e.target.reset()
     },

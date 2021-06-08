@@ -4,12 +4,12 @@
       <img
         src="~/assets/png/google-icon.png"
         class="icon icon-google"
-        @click.prevent="loginClick('google')"
+        @click.prevent="loginClick(loginType.google)"
       />
 
       <img
         src="~/assets/png/github-icon.png"
-        @click.prevent="loginClick('github')"
+        @click.prevent="loginClick(loginType.git)"
         class="icon"
       />
     </div>
@@ -25,6 +25,11 @@ export default {
       title: `Login`,
     }
   },
+  data() {
+    return {
+      loginType: Object.freeze({ google: 'google', git: 'github' }),
+    }
+  },
   methods: {
     async loginClick(methodType) {
       try {
@@ -35,6 +40,7 @@ export default {
     },
   },
   mounted() {
+    console.log(this._.random(20))
     // !this.$auth.loggedIn && this.$router.push('/')
   },
 }

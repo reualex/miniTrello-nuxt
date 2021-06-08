@@ -52,14 +52,13 @@ export default {
   methods: {
     ...mapActions('boards', ['addBoard']),
     addBoardTest(e) {
+      const newID = this.$uuid.v4()
       this.boardName.trim() &&
-      this.addBoard({
-        name: this.boardName,
-        columns: [],
-        id: `${this.boardsLengthState}${Math.floor(
-          Math.random() * (999 - 100) + 100
-        )}`, // uuid
-      })
+        this.addBoard({
+          name: this.boardName,
+          columns: [],
+          id: newID,
+        })
       e.target.reset()
     },
   },

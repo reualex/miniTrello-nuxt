@@ -1,3 +1,5 @@
+import { findIndex } from 'lodash'
+
 export const state = () => ({
   list: [],
 })
@@ -27,11 +29,7 @@ export const mutations = {
   },
 
   removeBoard(state, boardId) {
-    const index = state.list
-      .map(x => {
-        return x.id
-      })
-      .indexOf(boardId)
+    const index = findIndex(state.list, el => el.id === boardId)
     state.list.splice(index, 1)
   },
 
