@@ -82,7 +82,8 @@ export default {
     ...mapActions('boards', ['addColumnToBoard', 'addNewTask']),
     addColumn(e) {
       const newColumnID = this.$uuid.v4()
-      this.columnName.trim() &&
+
+      this._.trim(this.columnName) &&
         this.addColumnToBoard({
           boardId: this.boardId,
           name: this.columnName,
@@ -93,7 +94,7 @@ export default {
     },
     addTask(e, columnId) {
       const newTaskID = this.$uuid.v4()
-      this.taskName.trim() &&
+      this._.trim(this.taskName) &&
         this.addNewTask({
           columnId,
           boardId: this.boardId,
