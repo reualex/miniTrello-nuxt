@@ -63,6 +63,7 @@
 
 <script>
 import BasicInput from '~/components/Common/BasicInput'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'CurrentBoard',
   data() {
@@ -76,10 +77,11 @@ export default {
     BasicInput,
   },
   methods: {
+    ...mapActions('boards', ['addColumnToBoard', 'addNewTask']),
     addColumn(e) {
       const date = new Date()
       this.columnName.trim() &&
-        this.$store.dispatch('boards/addColumnToBoard', {
+        this.addColumnToBoard({
           boardId: this.boardId,
           name: this.columnName,
           tasks: [],
@@ -92,7 +94,7 @@ export default {
     addTask(e, columnId) {
       const date = new Date()
       this.taskName.trim() &&
-        this.$store.dispatch('boards/addNewTask', {
+        this.addNewTask({
           columnId,
           boardId: this.boardId,
           name: this.taskName,
@@ -104,8 +106,11 @@ export default {
     },
   },
   computed: {
+    ...mapGetters({
+      getCurrentBoardAction: 'boards/getCurrentBoard',
+    }),
     currentBoard() {
-      return this.$store.getters['boards/getCurrentBoard'](this.boardId)
+      return this.getCurrentBoardAction(this.boardId)
     },
   },
   created() {

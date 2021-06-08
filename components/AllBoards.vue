@@ -11,7 +11,7 @@
               <p class="w-3/12 mr-2">
                 Total columns: {{ board.columns.length }}
               </p>
-              <p class="w-3/12">Total tasks: {{ totalTasks(board.id) }}</p>
+              <p class="w-3/12">Total tasks: {{ getTotalTasks(board.id) }}</p>
               <span
                 class="delete-btn"
                 @click.prevent="$store.commit('boards/removeBoard', board.id)"
@@ -26,18 +26,15 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex'
 export default {
   name: 'AllBoards',
-  data() {
-    return {
-      allBoards: this.$store.state.boards.list, // computed MapState
-    }
-  },
-  methods: {
-    totalTasks(boardId) {
-      // COMPUTED => mapGetters
-      return this.$store.getters['boards/getTotalTasks'](boardId)
-    },
+
+  computed: {
+    ...mapGetters('boards', ['getTotalTasks']),
+    ...mapState({
+      allBoards: state => state.boards.list,
+    }),
   },
 }
 </script>

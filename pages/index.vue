@@ -6,7 +6,7 @@
     <div v-else>
       <h2 class="h2">Nothing board, create your first board:</h2>
     </div>
-    <form class="board-form" @submit.prevent="addBoard">
+    <form class="board-form" @submit.prevent="addBoardTest">
       <BasicInput
         v-model="boardName"
         label="New Board"
@@ -44,27 +44,22 @@ export default {
       boardsLengthState: state => state.boards.list.length,
     }),
   },
-  methods: {
-    ...mapActions({
-      addBoardAction: 'addBoard',
-    }),
-  },
   components: {
     AllBoards,
     BasicInput,
   },
 
   methods: {
-    addBoard(e) {
-      console.log('addBoardAction: ', this.addBoardAction)
+    ...mapActions('boards', ['addBoard']),
+    addBoardTest(e) {
       this.boardName.trim() &&
-        this.addBoardAction({
-          name: this.boardName,
-          columns: [],
-          id: `${this.boardsLengthState}${Math.floor(
-            Math.random() * (999 - 100) + 100
-          )}`, // uuid
-        })
+      this.addBoard({
+        name: this.boardName,
+        columns: [],
+        id: `${this.boardsLengthState}${Math.floor(
+          Math.random() * (999 - 100) + 100
+        )}`, // uuid
+      })
       e.target.reset()
     },
   },
