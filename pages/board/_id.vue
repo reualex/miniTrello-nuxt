@@ -29,10 +29,11 @@
         </ul>
         <span v-else class="pt-4">Nothing tasks</span>
         <form class="task-form" @submit.prevent="addTask($event, column.id)">
-          <label class="mr-4">Create new task:</label>
+          <label class="mr-4" :for="column.id">Create new task:</label>
 
           <BasicInput
             v-model="taskName"
+            :id="column.id"
             label="New Task"
             placeholder="Enter your task name"
             name="taskName"
@@ -46,7 +47,7 @@
     <span v-else>Nothing column, create new</span>
 
     <form class="pt-5 flex flex-col" @submit.prevent="addColumn">
-      <label class="mr-4">Create new column:</label>
+      <label class="mr-4" :for="boardId">Create new column:</label>
 
       <BasicInput
         v-model="columnName"
@@ -55,6 +56,7 @@
         name="taskName"
         type="text"
         class="max-w-xs mt-4"
+        :id="boardId"
       />
       <v-btn type="submit" class="max-w-xs mt-4">Add</v-btn>
     </form>

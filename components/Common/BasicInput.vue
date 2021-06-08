@@ -1,7 +1,8 @@
 <template>
   <div class="basic-input">
-    <label class="mb-1.5" :for="name">{{ label }}</label>
+    <label class="mb-1.5" :for="inputId">{{ label }}</label>
     <input
+      :id="inputId"
       :placeholder="placeholder"
       :name="name"
       :type="type"
@@ -16,12 +17,18 @@
 // _uid
 export default {
   name: 'BasicInput',
+  data() {
+    return {
+      inputId: this.id || this.$uuid.v1(),
+    }
+  },
   props: {
     label: { type: String, default: '' },
     name: { type: String, default: '' },
     type: { type: String, default: 'text' },
     required: { type: Boolean, default: true },
     placeholder: { type: String, default: '' },
+    id: { type: String, default: '' },
   },
 }
 </script>
