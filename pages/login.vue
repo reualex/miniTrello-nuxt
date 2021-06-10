@@ -30,18 +30,27 @@ export default {
       loginType: Object.freeze({ google: 'google', git: 'github' }),
     }
   },
+  // computed: {
+  //   windowOpener() {
+  //     return window.params
+  //   },
+  // },
   methods: {
-    async loginClick(methodType) {
-      try {
-        await this.$auth.loginWith(methodType)
-      } catch (error) {
-        console.error('Error: ', error)
-      }
+    // async loginClick(methodType) {
+    //   try {
+    //     await this.$auth.loginWith(methodType)
+    //   } catch (error) {
+    //     console.error('Error: ', error)
+    //   }
+    // },
+    loginClick(methodType) {
+      const params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
+width=0,height=0,left=-1000,top=-1000`
+      window.open(`/callback?${methodType}`, methodType, params)
     },
   },
   mounted() {
-    console.log(this._.random(20))
-    // !this.$auth.loggedIn && this.$router.push('/')
+    this.$auth.loggedIn && this.$router.push('/')
   },
 }
 </script>
