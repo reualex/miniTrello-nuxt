@@ -46,6 +46,9 @@ export const mutations = {
 }
 
 export const getters = {
+  boardCount: state => {
+    return state.list.length
+  },
   getCurrentBoard: state => id => {
     return state.list.find(el => el.id.toString() === id.toString())
   },

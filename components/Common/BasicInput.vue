@@ -5,6 +5,7 @@
       :id="inputId"
       :placeholder="placeholder"
       :name="name"
+      :value="value"
       :type="type"
       :required="required"
       @input="$emit('input', $event.target.value)"
@@ -14,21 +15,32 @@
 </template>
 
 <script>
-// _uid
+/**
+ *
+ * [x] Add 'type' prop validation
+ * [] _uui uniq
+ */
 export default {
   name: 'BasicInput',
-  data() {
-    return {
-      inputId: this.id || this.$uuid.v1(),
-    }
-  },
   props: {
     label: { type: String, default: '' },
     name: { type: String, default: '' },
-    type: { type: String, default: 'text' },
+    value: { type: String, default: '' },
+    type: {
+      type: String,
+      default: 'text',
+      validator(value) {
+        return ['text', 'password', 'email', 'phone'].includes(value)
+      },
+    },
     required: { type: Boolean, default: true },
     placeholder: { type: String, default: '' },
     id: { type: String, default: '' },
+  },
+  computed: {
+    inputId() {
+      return this.id || this.$uuid.v4()
+    },
   },
 }
 </script>

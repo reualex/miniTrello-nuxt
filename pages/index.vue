@@ -2,13 +2,13 @@
   <div class="container">
     Home
     <hr />
-    <div v-if="$store.state.boards.list.length"><AllBoards /></div>
+    <div v-if="boardCount"><AllBoards /></div>
     <div v-else>
       <h2 class="h2">Nothing board, create your first board:</h2>
     </div>
-    <form class="board-form" @submit.prevent="addBoardTest">
+    <form class="board-form" @submit.prevent="submitForm">
       <BasicInput
-        v-model="boardName"
+        :value="boardName"
         label="New Board"
         placeholder="Enter your board name"
         name="boardName"
@@ -18,17 +18,25 @@
       <v-btn type="submit">Add</v-btn>
     </form>
 
-    <p>Total board: {{ boardsLengthState }}</p>
+    <p>Total board: {{ boardCount }}</p>
   </div>
 </template>
 
 <script>
+/**
+ * [x] ...mapState, ...mapGetters, ...mapActions
+ * [x] add function reset form
+ */
 import AllBoards from '~/components/AllBoards'
 import BasicInput from '~/components/Common/BasicInput'
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Home',
   middleware: 'auth',
+  components: {
+    AllBoards,
+    BasicInput,
+  },
   head() {
     return {
       title: `Home`,
@@ -39,25 +47,19 @@ export default {
       boardName: '',
     }
   },
-  mounted() {
-    if (window.opener) {
-      window.opener?.location.replace('/')
-      window.close()
-    }
-  },
+  // mounted() {
+  //   if (window.opener) {
+  //     window.opener?.location.replace('/')
+  //     window.close()
+  //   }
+  // },
   computed: {
-    ...mapState({
-      boardsLengthState: state => state.boards.list.length,
-    }),
-  },
-  components: {
-    AllBoards,
-    BasicInput,
+    ...mapGetters('boards', ['boardCount']),
   },
 
   methods: {
     ...mapActions('boards', ['addBoard']),
-    addBoardTest(e) {
+    submitForm(e) {
       const newID = this.$uuid.v4()
       this.boardName.trim() &&
         this.addBoard({
@@ -65,7 +67,10 @@ export default {
           columns: [],
           id: newID,
         })
-      e.target.reset()
+      this.resetForm()
+    },
+    resetForm() {
+      this.boardName = ''
     },
   },
 }

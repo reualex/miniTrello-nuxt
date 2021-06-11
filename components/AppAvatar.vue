@@ -2,7 +2,7 @@
   <div class="avatar">
     <img v-if="link" :src="link" />
     <div v-else>
-      {{ getInitials(fullName) }}
+      {{ userInitials }}
     </div>
   </div>
 </template>
@@ -14,10 +14,9 @@ export default {
     link: { type: String, default: '' },
     fullName: { type: String, default: 'User' },
   },
-  methods: {
-    // TODO: move to computed
-    getInitials(name) {
-      return name
+  computed: {
+    userInitials() {
+      return this.fullName
         ?.split(' ')
         .map(el => el[0])
         .join('')

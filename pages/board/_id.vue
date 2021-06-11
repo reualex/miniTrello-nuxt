@@ -6,6 +6,7 @@
       v-if="currentBoard.columns && currentBoard.columns.length"
       class="flex overflow-x-auto"
     >
+      <!-- TaskList.vue && TaskItem.vue -->
       <li
         v-for="column in currentBoard.columns"
         :key="column.id"

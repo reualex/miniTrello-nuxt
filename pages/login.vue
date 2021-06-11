@@ -17,6 +17,9 @@
 </template>
 
 <script>
+/**
+ * [] Enums
+ */
 export default {
   name: 'Login',
   layout: 'empty',
@@ -33,10 +36,22 @@ export default {
   },
 
   methods: {
-    loginClick(methodType) {
+    async loginClick(methodType) {
       const params = `width=600,height=600,left=600,top=200`
 
-      this.openWindow = window.open(`callback?${methodType}`, '_blank', params)
+      // TODO: URL query
+      // this.openWindow = window.open(
+      //   `login-modal?type=${methodType}`,
+      //   '_blank',
+      //   params
+      // )
+      if (!this.$auth.loggedIn) {
+        try {
+          await this.$auth.loginWith(methodType)
+        } catch (error) {
+          console.error('Error: ', error)
+        }
+      }
     },
   },
   mounted() {

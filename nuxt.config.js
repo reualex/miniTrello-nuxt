@@ -26,7 +26,7 @@ export default {
   plugins: ['@/plugins/uuid.js', '@/plugins/lodash.js'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  components: false,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
@@ -71,8 +71,9 @@ export default {
         clientSecret: process.env.VUE_APP_GIT_CLIENT_SECRET,
       },
     },
+
     redirect: {
-      login: '/',
+      login: '/login',
       callback: '/callback',
       logout: '/login',
     },

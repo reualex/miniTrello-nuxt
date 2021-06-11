@@ -1,25 +1,9 @@
 <template>
-  <div class="container"></div>
+  <div class="containre">Loader</div>
 </template>
 
 <script>
 export default {
-  name: 'callback',
-  layout: 'empty',
-
-  computed: {
-    type() {
-      return window.location.search.substr(1)
-    },
-  },
-  async mounted() {
-    if (!this.$auth.loggedIn) {
-      try {
-        await this.$auth.loginWith(this.type)
-      } catch (error) {
-        console.error('Error: ', error)
-      }
-    }
-  },
+  name: 'Callback',
 }
 </script>
