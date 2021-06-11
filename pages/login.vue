@@ -28,25 +28,15 @@ export default {
   data() {
     return {
       loginType: Object.freeze({ google: 'google', git: 'github' }),
+      openWindow: null,
     }
   },
-  // computed: {
-  //   windowOpener() {
-  //     return window.params
-  //   },
-  // },
+
   methods: {
-    // async loginClick(methodType) {
-    //   try {
-    //     await this.$auth.loginWith(methodType)
-    //   } catch (error) {
-    //     console.error('Error: ', error)
-    //   }
-    // },
     loginClick(methodType) {
-      const params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
-width=0,height=0,left=-1000,top=-1000`
-      window.open(`/callback?${methodType}`, methodType, params)
+      const params = `width=600,height=600,left=600,top=200`
+
+      this.openWindow = window.open(`callback?${methodType}`, '_blank', params)
     },
   },
   mounted() {

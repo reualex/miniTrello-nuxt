@@ -1,29 +1,21 @@
 <template>
-  <div class="container">
-    <p>Callback page</p>
-    <p>{{ param }}</p>
-  </div>
+  <div class="container"></div>
 </template>
 
 <script>
 export default {
   name: 'callback',
   layout: 'empty',
-  data() {
-    return {
-      type: 'google',
-      param: this.$route.params,
-    }
-  },
-  methods: {
-    closeWindow() {
-      //   window.close()
+
+  computed: {
+    type() {
+      return window.location.search.substr(1)
     },
   },
   async mounted() {
     if (!this.$auth.loggedIn) {
       try {
-        await this.$auth.loginWith('google').then(() => this.closeWindow())
+        await this.$auth.loginWith(this.type)
       } catch (error) {
         console.error('Error: ', error)
       }
