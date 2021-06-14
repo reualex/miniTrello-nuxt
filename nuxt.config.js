@@ -23,10 +23,10 @@ export default {
   css: ['@/assets/css/main.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/vue-google-btn.js'],
+  plugins: ['@/plugins/uuid.js', '@/plugins/lodash.js'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  components: false,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
@@ -40,7 +40,6 @@ export default {
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
-    customVariables: ['~/assets/variables.scss'],
     theme: {
       dark: true,
       themes: {
@@ -72,8 +71,11 @@ export default {
         clientSecret: process.env.VUE_APP_GIT_CLIENT_SECRET,
       },
     },
+
     redirect: {
-      callback: '/login',
+      login: '/login',
+      callback: '/callback',
+      logout: '/login',
     },
   },
 

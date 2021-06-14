@@ -2,13 +2,14 @@
   <div class="container">
     Home
     <hr />
-    <div v-if="$store.state.boards.list.length"><AllBoards /></div>
+    <div v-if="boardCount"><AllBoards /></div>
     <div v-else>
       <h2 class="h2">Nothing board, create your first board:</h2>
     </div>
-    <form class="board-form" @submit.prevent="addBoard">
+
+    <form class="board-form" @submit.prevent="submitForm">
       <BasicInput
-        v-model="boardName"
+        :value="boardName"
         label="New Board"
         placeholder="Enter your board name"
         name="boardName"
@@ -18,15 +19,25 @@
       <v-btn type="submit">Add</v-btn>
     </form>
 
-    <p>Total board: {{ boardsLength }}</p>
+    <p>Total board: {{ boardCount }}</p>
   </div>
 </template>
 
 <script>
+/**
+ * [x] ...mapState, ...mapGetters, ...mapActions
+ * [x] add function reset form
+ */
 import AllBoards from '~/components/AllBoards'
-import BasicInput from '~/components/BasicInput'
+import BasicInput from '~/components/Common/BasicInput'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Home',
+  middleware: 'auth',
+  components: {
+    AllBoards,
+    BasicInput,
+  },
   head() {
     return {
       title: `Home`,
@@ -37,29 +48,31 @@ export default {
       boardName: '',
     }
   },
+  // mounted() {
+  //   if (window.opener) {
+  //     window.opener?.location.replace('/')
+  //     window.close()
+  //   }
+  // },
   computed: {
-    boardsLength() {
-      return this.$store.state.boards.list.length
-    },
+    ...mapGetters('boards', ['boardCount']),
   },
-  components: {
-    AllBoards,
-    BasicInput,
-  },
-  created() {
-    console.log('state: ', this.$store)
-  },
+
   methods: {
-    addBoard(e) {
-      console.log('boardName: ', this.boardName)
+    ...mapActions('boards', ['addBoard']),
+    submitForm(e) {
+      const newID = this.$uuid.v4()
       this.boardName.trim() &&
-        this.$store.dispatch('boards/addBoard', {
+        this.addBoard({
           name: this.boardName,
-          id: `${this.boardsLength || 0}${Math.floor(
-            Math.random() * (999 - 100) + 100
-          )}`,
+          columns: [],
+          id: newID,
         })
-      e.target.reset()
+
+      this.resetForm()
+    },
+    resetForm() {
+      this.boardName = ''
     },
   },
 }

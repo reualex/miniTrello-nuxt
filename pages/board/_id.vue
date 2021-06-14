@@ -2,7 +2,11 @@
   <div class="container">
     <h2 class="h2">Board name: {{ currentBoard.name }}</h2>
     <h3>Columns:</h3>
-    <ul v-if="currentBoard.columns && currentBoard.columns.length" class="flex">
+    <ul
+      v-if="currentBoard.columns && currentBoard.columns.length"
+      class="flex overflow-x-auto"
+    >
+      <!-- TaskList.vue && TaskItem.vue -->
       <li
         v-for="column in currentBoard.columns"
         :key="column.id"
@@ -10,26 +14,35 @@
       >
         <p>{{ column.name }}</p>
 
-        <hr />
+        <hr class="border-indigo-100" />
 
-        <ul v-if="tasks && tasks.length">
-          <li v-for="task in tasks">{{ task.name }}</li>
-        </ul>
-        <span v-else>Nothing tasks</span>
-        <!--
-        <div class="task-form">
-          <label :for="`newTask-${column.id}`" class="mr-4"
-            >Create new column:</label
+        <!-- TaskList.vue && TaskItem.vue -->
+        <ul v-if="column.tasks.length" class="one-column-tasks">
+          <li
+            v-for="task in column.tasks"
+            :key="task.id"
+            class="mb-3 cursor-pointer"
           >
-          <input
-            :id="`newTask-${column.id}`"
-            class="mr-4"
+            <v-card>
+              {{ task.name }}
+            </v-card>
+          </li>
+        </ul>
+        <span v-else class="pt-4">Nothing tasks</span>
+        <form class="task-form" @submit.prevent="addTask($event, column.id)">
+          <label class="mr-4" :for="column.id">Create new task:</label>
+
+          <BasicInput
             v-model="taskName"
-            placeholder="please, enter task name"
+            :id="column.id"
+            label="New Task"
+            placeholder="Enter your task name"
+            name="taskName"
+            type="text"
           />
-          <v-btn @click="addTask(column.id)">Add</v-btn>
-        </div>
-        -->
+
+          <v-btn type="submit" class="mt-3">Add task</v-btn>
+        </form>
       </li>
     </ul>
     <span v-else>Nothing column, create new</span>
@@ -39,8 +52,19 @@
       <input
         id="newColumn"
         class="mr-4"
+
+
+    <form class="pt-5 flex flex-col" @submit.prevent="addColumn">
+      <label class="mr-4" :for="boardId">Create new column:</label>
+
+      <BasicInput
         v-model="columnName"
-        placeholder="please, enter board name"
+        label="New Column"
+        placeholder="Please, enter column name"
+        name="taskName"
+        type="text"
+        class="max-w-xs mt-4"
+        :id="boardId"
       />
       <v-btn @click="addColumn">Add</v-btn>
     </div> -->
@@ -53,7 +77,8 @@
         type="text"
         class="mb-9 max-w-sm"
       />
-      <v-btn type="submit">Add</v-btn>
+
+      <v-btn type="submit" class="max-w-xs mt-4">Add</v-btn>
     </form>
   </div>
 </template>
@@ -65,54 +90,53 @@ export default {
   components: {
     BasicInput,
   },
+
+>>>>>>> 59c5d11d825623e606768dc08e0cddb35c81564b
   data() {
     return {
       boardId: this.$route.params.id,
       columnName: '',
-      // taskName: '',
+      taskName: '',
     }
   },
+  components: {
+    BasicInput,
+  },
   methods: {
+    ...mapActions('boards', ['addColumnToBoard', 'addNewTask']),
     addColumn(e) {
-      const date = new Date()
-      this.columnName.trim() &&
-        this.$store.dispatch('boards/addColumnToBoard', {
+      const newColumnID = this.$uuid.v4()
+
+      this._.trim(this.columnName) &&
+        this.addColumnToBoard({
           boardId: this.boardId,
           name: this.columnName,
-          id: String(
-            date.getMinutes() + date.getSeconds() + date.getMilliseconds()
-          ),
+          tasks: [],
+          id: newColumnID,
         })
       // e.target.reset()
     },
-    addTask(columnId) {
-      const date = new Date()
-      this.taskName.trim() &&
-        this.$store.dispatch('boards/addNewTask', {
+    addTask(e, columnId) {
+      const newTaskID = this.$uuid.v4()
+      this._.trim(this.taskName) &&
+        this.addNewTask({
           columnId,
           boardId: this.boardId,
           name: this.taskName,
-          id: String(
-            date.getMinutes() + date.getSeconds() + date.getMilliseconds()
-          ),
+          id: newTaskID,
         })
-      this.columnName = ''
+      e.target.reset()
     },
   },
   computed: {
+    ...mapGetters({
+      getCurrentBoardAction: 'boards/getCurrentBoard',
+    }),
     currentBoard() {
-      return (
-        this.$store.getters['boards/getCurrentBoard'](this.boardId) || {
-          name: '',
-        }
-      )
-    },
-    tasks() {
-      return this.currentBoard.tasks
+      return this.getCurrentBoardAction(this.boardId)
     },
   },
   created() {
-    console.log('currentBoard: ', this.currentBoard)
     !this.currentBoard.id && this.$router.push('/')
   },
 }
@@ -120,12 +144,25 @@ export default {
 
 <style lang="scss">
 .one-column {
-  @apply flex flex-col;
-  min-width: 200px;
+  @apply flex flex-col p-3;
+  max-width: 300px;
   min-height: 500px;
-  background: gray;
+  background: #efefef;
   &:not(:last-child) {
     margin-right: 10px;
   }
+
+  &-tasks {
+    @apply py-4;
+    overflow-y: scroll;
+    max-height: 300px;
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+  }
+}
+
+.task-form {
+  @apply mt-auto;
 }
 </style>

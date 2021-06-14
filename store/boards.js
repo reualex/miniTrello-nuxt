@@ -1,3 +1,5 @@
+import { findIndex } from 'lodash'
+
 export const state = () => ({
   list: [],
 })
@@ -9,9 +11,9 @@ export const actions = {
   addColumnToBoard({ commit }, newColumn) {
     commit('addColumnToBoard', newColumn)
   },
-  addNewTask({commit}, newTask) {
+  addNewTask({ commit }, newTask) {
     commit('addNewTask', newTask)
-  }
+  },
 }
 
 export const mutations = {
@@ -23,35 +25,43 @@ export const mutations = {
     const currentBoard = state.list.find(
       el => el.id.toString() === newColumn.boardId.toString()
     )
-    if (!currentBoard.columns) currentBoard.columns = []
     currentBoard.columns.push(newColumn)
   },
 
   removeBoard(state, boardId) {
-    const index = state.list
-      .map(x => {
-        return x.id
-      })
-      .indexOf(boardId)
+    const index = findIndex(state.list, el => el.id === boardId)
     state.list.splice(index, 1)
   },
 
   addNewTask(state, newTask) {
-  const currentBoard = state.list.find(el => el.id.toString() === newTask.boardId.toString())
-  const currentColumn = currentBoard.columns.find((col) => col.id.toString() === newTask.columnId)
-  // !currentColumn.tasks && currentColumn.tasks = []
-  if (!('tasks' in currentColumn)) currentColumn.tasks = []
+    const currentBoard = state.list.find(
+      el => el.id.toString() === newTask.boardId.toString()
+    )
+    const currentColumn = currentBoard.columns.find(
+      col => col.id.toString() === newTask.columnId
+    )
 
-  currentColumn.tasks.push(newTask)
-  // console.log('Created TASK: ', currentColumn.tasks)
-  console.log('currentColumn: ', currentColumn)
-
-
-  }
+    currentColumn.tasks.push(newTask)
+  },
 }
 
 export const getters = {
+  boardCount: state => {
+    return state.list.length
+  },
   getCurrentBoard: state => id => {
     return state.list.find(el => el.id.toString() === id.toString())
+  },
+
+  getTotalTasks: state => boardId => {
+    let totalTasks = 0
+    const currentBoard = state.list.find(
+      el => el.id.toString() === boardId.toString()
+    )
+
+    currentBoard.columns.forEach(column => {
+      totalTasks += column.tasks.length
+    })
+    return totalTasks
   },
 }

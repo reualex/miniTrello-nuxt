@@ -2,7 +2,7 @@
   <v-app-bar class="app-bar">
     <div class="app-bar_content">
       <nuxt-link to="/">
-        <img class="app-logo" src="~/static/favicon.png" />
+        <img class="app-logo" src="/favicon.png" />
       </nuxt-link>
 
       <div class="app-bar-buttons">
@@ -15,13 +15,13 @@
             />
           </nuxt-link>
 
-          <v-btn @click="$auth.logout($auth.strategy.options.name)"
-            >Logout</v-btn
-          >
+          <v-btn @click="$auth.logout($auth.strategy.options.name)">
+            Logout
+          </v-btn>
         </div>
-        <nuxt-link class="app-bar-buttons-login" v-else to="/login"
-          ><v-btn>Need login</v-btn></nuxt-link
-        >
+        <nuxt-link class="app-bar-buttons-login" v-else to="/login">
+          <v-btn>Login</v-btn>
+        </nuxt-link>
       </div>
     </div>
   </v-app-bar>
@@ -30,10 +30,10 @@
 <script>
 import AppAvatar from '~/components/AppAvatar'
 export default {
+  name: 'AppHeader',
   components: {
     AppAvatar,
   },
-  methods: {},
 }
 </script>
 

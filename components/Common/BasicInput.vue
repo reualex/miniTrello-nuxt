@@ -1,9 +1,11 @@
 <template>
   <div class="basic-input">
-    <label class="mb-1.5" :for="name">{{ label }}</label>
+    <label class="mb-1.5" :for="inputId">{{ label }}</label>
     <input
+      :id="inputId"
       :placeholder="placeholder"
       :name="name"
+      :value="value"
       :type="type"
       :required="required"
       @input="$emit('input', $event.target.value)"
@@ -13,14 +15,32 @@
 </template>
 
 <script>
+/**
+ *
+ * [x] Add 'type' prop validation
+ * [] _uui uniq
+ */
 export default {
+  name: 'BasicInput',
   props: {
     label: { type: String, default: '' },
     name: { type: String, default: '' },
-    type: { type: String, default: 'text' },
+    value: { type: String, default: '' },
+    type: {
+      type: String,
+      default: 'text',
+      validator(value) {
+        return ['text', 'password', 'email', 'phone'].includes(value)
+      },
+    },
     required: { type: Boolean, default: true },
     placeholder: { type: String, default: '' },
-    method: { type: Function, default: () => {} },
+    id: { type: String, default: '' },
+  },
+  computed: {
+    inputId() {
+      return this.id || this.$uuid.v4()
+    },
   },
 }
 </script>
@@ -28,7 +48,6 @@ export default {
 <style lang="scss">
 .basic-input {
   @apply w-full flex flex-col relative;
-  height: 100%;
 
   label {
     font-size: 12px;

@@ -13,15 +13,15 @@
           </div>
           <div class="profile-form-filed mb-8">
             <p class="mr-4">Your name:</p>
-            <p>{{ $auth.user.name || '-' }}</p>
+            <p>{{ getName }}</p>
           </div>
           <div class="profile-form-filed mb-8">
             <p class="mr-4">Your email:</p>
-            <p>{{ $auth.user.email || '-' }}</p>
+            <p>{{ getEmail }}</p>
           </div>
           <div class="profile-form-filed">
             <p class="mr-4">Your login:</p>
-            <p>{{ $auth.user.login || '-' }}</p>
+            <p>{{ getLogin }}</p>
           </div>
         </div>
       </v-card>
@@ -36,6 +36,17 @@ export default {
   middleware: 'auth',
   components: {
     AppAvatar,
+  },
+  computed: {
+    getName() {
+      return this.$auth.user.name || '-'
+    },
+    getEmail() {
+      return this.$auth.user.email || '-'
+    },
+    getLogin() {
+      return this.$auth.user.login || '-'
+    },
   },
 }
 </script>

@@ -4,12 +4,12 @@
       <img
         src="~/assets/png/google-icon.png"
         class="icon icon-google"
-        @click.prevent="loginGoogleClicked"
+        @click.prevent="loginClick(loginType.google)"
       />
 
       <img
         src="~/assets/png/github-icon.png"
-        @click.prevent="loginGitClicked"
+        @click.prevent="loginClick(loginType.git)"
         class="icon"
       />
     </div>
@@ -17,29 +17,40 @@
 </template>
 
 <script>
+/**
+ * [] Enums
+ */
 export default {
-  name: 'LoginPage',
+  name: 'Login',
   layout: 'empty',
   head() {
     return {
       title: `Login`,
     }
   },
+  data() {
+    return {
+      loginType: Object.freeze({ google: 'google', git: 'github' }),
+      openWindow: null,
+    }
+  },
+
   methods: {
-    async loginGitClicked() {
-      try {
-        let res = await this.$auth.loginWith('github')
-        console.log('login result: ', res)
-      } catch (err) {
-        console.log('login error: ', err)
-      }
-    },
-    async loginGoogleClicked() {
-      try {
-        let res = await this.$auth.loginWith('google')
-        console.log('login result: ', res)
-      } catch (err) {
-        console.log('login error: ', err)
+    async loginClick(methodType) {
+      const params = `width=600,height=600,left=600,top=200`
+
+      // TODO: URL query
+      // this.openWindow = window.open(
+      //   `login-modal?type=${methodType}`,
+      //   '_blank',
+      //   params
+      // )
+      if (!this.$auth.loggedIn) {
+        try {
+          await this.$auth.loginWith(methodType)
+        } catch (error) {
+          console.error('Error: ', error)
+        }
       }
     },
   },
@@ -63,8 +74,6 @@ export default {
   &:hover {
     transition: 0.2s;
     border-radius: 50%;
-    -webkit-box-shadow: 0px 0px 10px 4px rgba(34, 60, 80, 0.18);
-    -moz-box-shadow: 0px 0px 10px 4px rgba(34, 60, 80, 0.18);
     box-shadow: 0px 0px 10px 4px rgba(34, 60, 80, 0.18);
   }
 }
