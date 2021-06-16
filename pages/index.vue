@@ -56,11 +56,11 @@ export default {
   //   }
   // },
   computed: {
-    ...mapGetters('localStorage', ['boardCount']),
+    ...mapGetters('sessionStorage', ['boardCount']),
   },
 
   methods: {
-    ...mapActions('localStorage', ['addBoard']),
+    ...mapActions('sessionStorage', ['addBoard']),
     submitForm(e) {
       const newID = this.$uuid.v4()
       this.boardName.trim() &&

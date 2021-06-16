@@ -14,6 +14,9 @@ export const actions = {
   addNewTask({ commit }, newTask) {
     commit('addNewTask', newTask)
   },
+  removeBoard({ commit }, id) {
+    commit('removeBoard', id)
+  },
 }
 
 export const mutations = {
@@ -23,7 +26,7 @@ export const mutations = {
 
   addColumnToBoard(state, newColumn) {
     const currentBoard = state.list.find(
-      el => el.id.toString() === newColumn.boardId.toString()
+      el => el.id?.toString() === newColumn.boardId?.toString()
     )
     currentBoard.columns.push(newColumn)
   },
@@ -35,10 +38,10 @@ export const mutations = {
 
   addNewTask(state, newTask) {
     const currentBoard = state.list.find(
-      el => el.id.toString() === newTask.boardId.toString()
+      el => el.id?.toString() === newTask.boardId?.toString()
     )
     const currentColumn = currentBoard.columns.find(
-      col => col.id.toString() === newTask.columnId
+      col => col.id?.toString() === newTask.columnId
     )
 
     currentColumn.tasks.push(newTask)
@@ -50,13 +53,13 @@ export const getters = {
     return state.list.length
   },
   getCurrentBoard: state => id => {
-    return state.list.find(el => el.id.toString() === id.toString())
+    return state.list.find(el => el.id?.toString() === id?.toString())
   },
 
   getTotalTasks: state => boardId => {
     let totalTasks = 0
     const currentBoard = state.list.find(
-      el => el.id.toString() === boardId.toString()
+      el => el.id?.toString() === boardId?.toString()
     )
 
     currentBoard.columns.forEach(column => {

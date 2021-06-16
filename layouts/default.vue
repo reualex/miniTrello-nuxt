@@ -1,7 +1,9 @@
 <template>
   <div>
-    <AppHeader />
-    <Nuxt />
+    <client-only>
+      <AppHeader />
+      <Nuxt />
+    </client-only>
   </div>
 </template>
 

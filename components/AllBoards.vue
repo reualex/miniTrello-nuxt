@@ -12,11 +12,7 @@
                 Total columns: {{ board.columns.length }}
               </p>
               <p class="w-3/12">Total tasks: {{ getTotalTasks(board.id) }}</p>
-              <span
-                class="delete-btn"
-                @click.prevent="
-                  $store.commit('localStorage/removeBoard', board.id)
-                "
+              <span class="delete-btn" @click.prevent="removeBoard(board.id)"
                 >X</span
               >
             </div>
@@ -28,15 +24,18 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState, mapActions } from 'vuex'
 export default {
   name: 'AllBoards',
 
   computed: {
-    ...mapGetters('localStorage', ['getTotalTasks']),
+    ...mapGetters('sessionStorage', ['getTotalTasks']),
     ...mapState({
-      allBoards: state => state.localStorage.list,
+      allBoards: state => state.sessionStorage.list,
     }),
+  },
+  methods: {
+    ...mapActions('sessionStorage', ['removeBoard']),
   },
 }
 </script>
