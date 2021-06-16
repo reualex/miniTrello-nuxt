@@ -14,7 +14,9 @@
               <p class="w-3/12">Total tasks: {{ getTotalTasks(board.id) }}</p>
               <span
                 class="delete-btn"
-                @click.prevent="$store.commit('boards/removeBoard', board.id)"
+                @click.prevent="
+                  $store.commit('localStorage/removeBoard', board.id)
+                "
                 >X</span
               >
             </div>
@@ -31,9 +33,9 @@ export default {
   name: 'AllBoards',
 
   computed: {
-    ...mapGetters('boards', ['getTotalTasks']),
+    ...mapGetters('localStorage', ['getTotalTasks']),
     ...mapState({
-      allBoards: state => state.boards.list,
+      allBoards: state => state.localStorage.list,
     }),
   },
 }

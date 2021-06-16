@@ -80,7 +80,7 @@ export default {
     BasicInput,
   },
   methods: {
-    ...mapActions('boards', ['addColumnToBoard', 'addNewTask']),
+    ...mapActions('localStorage', ['addColumnToBoard', 'addNewTask']),
     addColumn(e) {
       const newColumnID = this.$uuid.v4()
 
@@ -107,10 +107,11 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getCurrentBoardAction: 'boards/getCurrentBoard',
+      getCurrentBoardAction: 'localStorage/getCurrentBoard',
     }),
+
     currentBoard() {
-      return this.getCurrentBoardAction(this.boardId)
+      return this.getCurrentBoardAction(this.boardId) || {}
     },
   },
   created() {

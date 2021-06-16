@@ -8,13 +8,14 @@
     </div>
     <form class="board-form" @submit.prevent="submitForm">
       <BasicInput
-        :value="boardName"
+        v-model="boardName"
         label="New Board"
         placeholder="Enter your board name"
         name="boardName"
         type="text"
         class="mb-9 max-w-sm"
       />
+
       <v-btn type="submit">Add</v-btn>
     </form>
 
@@ -54,11 +55,11 @@ export default {
   //   }
   // },
   computed: {
-    ...mapGetters('boards', ['boardCount']),
+    ...mapGetters('localStorage', ['boardCount']),
   },
 
   methods: {
-    ...mapActions('boards', ['addBoard']),
+    ...mapActions('localStorage', ['addBoard']),
     submitForm(e) {
       const newID = this.$uuid.v4()
       this.boardName.trim() &&
@@ -67,6 +68,7 @@ export default {
           columns: [],
           id: newID,
         })
+
       this.resetForm()
     },
     resetForm() {

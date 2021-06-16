@@ -2,13 +2,13 @@
   <div class="basic-input">
     <label class="mb-1.5" :for="inputId">{{ label }}</label>
     <input
+      v-model="innerValue"
       :id="inputId"
       :placeholder="placeholder"
       :name="name"
-      :value="value"
       :type="type"
       :required="required"
-      @input="$emit('input', $event.target.value)"
+      @input="setInput"
       class="pb-1 px-4"
     />
   </div>
@@ -37,6 +37,25 @@ export default {
     placeholder: { type: String, default: '' },
     id: { type: String, default: '' },
   },
+  created() {
+    this.innerValue = this.value
+  },
+  data() {
+    return {
+      innerValue: '',
+    }
+  },
+  watch: {
+    value(val) {
+      this.innerValue = val
+    },
+  },
+  methods: {
+    setInput() {
+      this.$emit('input', this.innerValue)
+    },
+  },
+
   computed: {
     inputId() {
       return this.id || this.$uuid.v4()
