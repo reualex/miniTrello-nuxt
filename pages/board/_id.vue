@@ -2,12 +2,7 @@
   <div class="container">
     <h2 class="h2">Board name: {{ currentBoard.name }}</h2>
     <h3>Columns:</h3>
-    <AllColumns
-      v-if="currentBoard.columns && currentBoard.columns.length"
-      :columns="currentBoard.columns"
-      :board-id="boardId"
-    />
-    <span v-else>Nothing column, create new</span>
+    <BoardAllColumns :columns="currentBoard.columns" :board-id="boardId" />
     <form class="column-form" @submit.prevent="addColumn">
       <BasicInput
         v-model="columnName"
@@ -25,13 +20,13 @@
 
 <script>
 import BasicInput from '~/components/Common/BasicInput'
-import AllColumns from '~/components/AllColumns'
+import BoardAllColumns from '~/components/BoardAllColumns'
 import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'CurrentBoard',
   components: {
     BasicInput,
-    AllColumns,
+    BoardAllColumns,
   },
 
   data() {

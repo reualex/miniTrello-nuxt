@@ -1,22 +1,10 @@
 <template>
-  <ul class="flex overflow-x-auto">
+  <ul v-if="columns && columns.length" class="flex overflow-x-auto">
     <li v-for="column in columns" :key="column.id" class="one-column">
       <p>{{ column.name }}</p>
 
       <hr class="border-indigo-100" />
-
-      <ul v-if="column.tasks.length" class="one-column-tasks">
-        <li
-          v-for="task in column.tasks"
-          :key="task.id"
-          class="mb-3 cursor-pointer"
-        >
-          <v-card>
-            {{ task.name }}
-          </v-card>
-        </li>
-      </ul>
-      <span v-else class="pt-4">Nothing tasks</span>
+      <AllTasks :tasks="column.tasks" />
       <form class="task-form" @submit.prevent="addTask(column.id)">
         <label class="mr-4" :for="column.id">Create new task:</label>
 
@@ -33,19 +21,22 @@
       </form>
     </li>
   </ul>
+  <span v-else>Nothing column, create new</span>
 </template>
 
 <script>
 import BasicInput from '~/components/Common/BasicInput'
+import AllTasks from '~/components/AllTasks'
 import { mapActions } from 'vuex'
 export default {
-  name: 'AllColumns',
+  name: 'BoardAllColumns',
   props: {
     columns: { type: Array, default: [] },
     boardId: { type: String, default: '' },
   },
   components: {
     BasicInput,
+    AllTasks,
   },
   data() {
     return {
