@@ -6,6 +6,7 @@
     <div v-else>
       <h2 class="h2">Nothing board, create your first board:</h2>
     </div>
+
     <form class="board-form" @submit.prevent="submitForm">
       <BasicInput
         v-model="boardName"

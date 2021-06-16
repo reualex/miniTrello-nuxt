@@ -46,6 +46,13 @@
       </li>
     </ul>
     <span v-else>Nothing column, create new</span>
+    <!--
+    <div class="column-form">
+      <label for="newColumn" class="mr-4">Create new column:</label>
+      <input
+        id="newColumn"
+        class="mr-4"
+
 
     <form class="pt-5 flex flex-col" @submit.prevent="addColumn">
       <label class="mr-4" :for="boardId">Create new column:</label>
@@ -59,16 +66,32 @@
         class="max-w-xs mt-4"
         :id="boardId"
       />
+      <v-btn @click="addColumn">Add</v-btn>
+    </div> -->
+    <form class="column-form" @submit.prevent="addColumn">
+      <BasicInput
+        v-model="columnName"
+        label="New Column"
+        placeholder="Enter your column name"
+        name="columnName"
+        type="text"
+        class="mb-9 max-w-sm"
+      />
+
       <v-btn type="submit" class="max-w-xs mt-4">Add</v-btn>
     </form>
   </div>
 </template>
 
 <script>
-import BasicInput from '~/components/Common/BasicInput'
-import { mapActions, mapGetters } from 'vuex'
+import BasicInput from '~/components/BasicInput'
 export default {
   name: 'CurrentBoard',
+  components: {
+    BasicInput,
+  },
+
+>>>>>>> 59c5d11d825623e606768dc08e0cddb35c81564b
   data() {
     return {
       boardId: this.$route.params.id,
@@ -91,7 +114,7 @@ export default {
           tasks: [],
           id: newColumnID,
         })
-      e.target.reset()
+      // e.target.reset()
     },
     addTask(e, columnId) {
       const newTaskID = this.$uuid.v4()
