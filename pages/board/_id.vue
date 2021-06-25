@@ -3,7 +3,7 @@
     <h2 class="h2">Board name: {{ currentBoard.name }}</h2>
     <h3>Columns:</h3>
     <BoardAllColumns :columns="currentBoard.columns" :board-id="boardId" />
-    <form class="column-form" @submit.prevent="addColumn">
+    <form class="mt-4" @submit.prevent="addColumn">
       <BasicInput
         v-model="columnName"
         label="New Column"
@@ -48,6 +48,7 @@ export default {
           tasks: [],
           id: newColumnID,
         })
+      this.columnName = ''
       // e.target.reset()
     },
   },
@@ -84,9 +85,5 @@ export default {
       width: 0;
     }
   }
-}
-
-.task-form {
-  @apply mt-auto;
 }
 </style>
