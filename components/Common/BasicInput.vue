@@ -18,7 +18,7 @@
 /**
  *
  * [x] Add 'type' prop validation
- * [] _uui uniq
+ * [x] _uui uniq
  */
 export default {
   name: 'BasicInput',

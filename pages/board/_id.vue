@@ -49,7 +49,6 @@ export default {
           id: newColumnID,
         })
       this.columnName = ''
-      // e.target.reset()
     },
   },
   computed: {

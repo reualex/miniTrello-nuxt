@@ -32,26 +32,46 @@ export default {
     return {
       loginType: Object.freeze({ google: 'google', git: 'github' }),
       openWindow: null,
+      closeModalWindow: false,
     }
+  },
+  watch: {
+    closeModalWindow(value) {
+      console.log('WATCH VALUE: ', this.$router)
+      if (value) {
+        const bc = new BroadcastChannel('login_channel')
+        bc.close()
+        // this.openWindow.close()
+        // don't work $router.push
+        this.$router.push({ name: 'Home' })
+        // window.location.replace('/')
+      }
+    },
   },
 
   methods: {
     async loginClick(methodType) {
       const params = `width=600,height=600,left=600,top=200`
-
-      // TODO: URL query
-      // this.openWindow = window.open(
-      //   `login-modal?type=${methodType}`,
-      //   '_blank',
-      //   params
-      // )
-      if (!this.$auth.loggedIn) {
-        try {
-          await this.$auth.loginWith(methodType)
-        } catch (error) {
-          console.error('Error: ', error)
-        }
+      const routeData = this.$router.resolve({
+        name: 'login-modal',
+        query: { type: methodType },
+      })
+      const bc = new BroadcastChannel('login_channel')
+      bc.onmessage = ev => {
+        console.log(`message event received: ${ev.data}`)
+        this.closeModalWindow = ev.data
       }
+
+      // [x] TODO: URL query
+      this.openWindow = window.open(routeData.href, '_blank', params)
+
+      // if (!this.$auth.loggedIn) {
+      //   try {
+      //     await this.$auth.loginWith(methodType)
+      //   } catch (error) {
+      //     console.error('Error: ', error)
+      //   }
+      // }
     },
   },
   mounted() {

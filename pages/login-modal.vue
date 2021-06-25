@@ -6,11 +6,6 @@
 export default {
   name: 'LoginModal',
   layout: 'empty',
-  computed: {
-    // type() {
-    //   return this.$route.query.type
-    // },
-  },
   // async asyncData({ $auth, route }) {
   //   // TODO: Try to use AsyncData or Fetch
   //   console.log('route: ', route)
@@ -25,6 +20,9 @@ export default {
   //   }
   // },
   async mounted() {
+    console.log('TEST!!')
+    var bc = new BroadcastChannel('login_channel')
+
     if (!this.$auth.loggedIn) {
       try {
         await this.$auth.loginWith(this.$route.query.type)
