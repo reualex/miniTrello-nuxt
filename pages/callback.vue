@@ -1,5 +1,5 @@
 <template>
-  <div class="containre">Loader</div>
+  <div></div>
 </template>
 
 <script>

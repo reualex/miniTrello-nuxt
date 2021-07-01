@@ -4,12 +4,12 @@
       <img
         src="~/assets/png/google-icon.png"
         class="icon icon-google"
-        @click.prevent="loginClick(loginType.google)"
+        @click.prevent="loginClick(loginTypes.google)"
       />
 
       <img
         src="~/assets/png/github-icon.png"
-        @click.prevent="loginClick(loginType.git)"
+        @click.prevent="loginClick(loginTypes.git)"
         class="icon"
       />
     </div>
@@ -18,8 +18,9 @@
 
 <script>
 /**
- * [] Enums
+ * [x] Enums
  */
+import { mapGetters } from 'vuex'
 export default {
   name: 'Login',
   layout: 'empty',
@@ -30,21 +31,23 @@ export default {
   },
   data() {
     return {
-      loginType: Object.freeze({ google: 'google', git: 'github' }),
       openWindow: null,
       closeModalWindow: false,
     }
   },
+  computed: {
+    ...mapGetters({ loginTypes: 'getLoginTypes' }),
+  },
   watch: {
     closeModalWindow(value) {
-      console.log('WATCH VALUE: ', this.$router)
+      console.log('WATCH VALUE: ', value)
       if (value) {
         const bc = new BroadcastChannel('login_channel')
         bc.close()
-        // this.openWindow.close()
+        this.openWindow.close()
         // don't work $router.push
-        this.$router.push({ name: 'Home' })
-        // window.location.replace('/')
+        // this.$router.push('/')
+        window.location.replace('/')
       }
     },
   },
@@ -64,14 +67,6 @@ export default {
 
       // [x] TODO: URL query
       this.openWindow = window.open(routeData.href, '_blank', params)
-
-      // if (!this.$auth.loggedIn) {
-      //   try {
-      //     await this.$auth.loginWith(methodType)
-      //   } catch (error) {
-      //     console.error('Error: ', error)
-      //   }
-      // }
     },
   },
   mounted() {
