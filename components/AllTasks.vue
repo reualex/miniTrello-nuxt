@@ -1,13 +1,27 @@
 <template>
   <div class="flex flex-col">
-    <ul v-if="tasks.length" class="one-column-tasks">
+    <!-- <ul v-if="tasks.length" class="one-column-tasks">
       <li v-for="task in tasks" :key="task.id" class="mb-3 cursor-pointer">
         <v-card>
           {{ task.name }}
         </v-card>
       </li>
-    </ul>
-    <span v-else class="pt-4">Nothing tasks</span>
+    </ul> -->
+    <draggable
+      v-model="myTasks"
+      group="tasks"
+      @start="drag = true"
+      @end="drag = false"
+      class="test-drag"
+    >
+      <div
+        v-for="task in myTasks"
+        :key="task.id"
+        class="cursor-pointer bg-white mb-2 border-2 rounded"
+      >
+        {{ task.name }}
+      </div>
+    </draggable>
     <form class="task-form mt-auto" @submit.prevent="addTask(columnId)">
       <label class="mr-4" :for="columnId">Create new task:</label>
 
@@ -26,8 +40,9 @@
 </template>
 
 <script>
+import draggable from 'vuedraggable'
 import BasicInput from '~/components/Common/BasicInput'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'AllTasks',
@@ -38,11 +53,29 @@ export default {
   },
   components: {
     BasicInput,
+    draggable,
   },
   data() {
     return {
       taskName: '',
     }
+  },
+  computed: {
+    ...mapGetters('sessionStorage', ['getColumnTasks']),
+    myTasks: {
+      get() {
+        const testTasks = this.getColumnTasks(this.boardId, this.columnId)
+        return testTasks
+      },
+
+      set(value) {
+        this.$store.commit('sessionStorage/updateList', {
+          tasks: value,
+          boardId: this.boardId,
+          columnId: this.columnId,
+        })
+      },
+    },
   },
   methods: {
     ...mapActions('sessionStorage', ['addNewTask']),
@@ -60,3 +93,9 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+.test-drag {
+  height: 450px;
+}
+</style>

@@ -46,6 +46,17 @@ export const mutations = {
 
     currentColumn.tasks.push(newTask)
   },
+
+  updateList(state, { tasks, boardId, columnId }) {
+    const currentBoard = state.list.find(
+      el => el.id.toString() === boardId.toString()
+    )
+    const currentColumn = currentBoard.columns.find(
+      el => el.id.toString() === columnId.toString()
+    )
+
+    currentColumn.tasks = tasks
+  },
 }
 
 export const getters = {
@@ -66,5 +77,16 @@ export const getters = {
       totalTasks += column.tasks.length
     })
     return totalTasks
+  },
+
+  getColumnTasks: state => (boardId, columnId) => {
+    const currentBoard = state.list.find(
+      el => el.id.toString() === boardId.toString()
+    )
+    const currentColumn = currentBoard.columns.find(
+      el => el.id.toString() === columnId.toString()
+    )
+
+    return currentColumn.tasks
   },
 }
