@@ -1,6 +1,13 @@
 <template>
   <div class="container">
-    <h2 class="h2">Board name: {{ currentBoard.name }}</h2>
+    <h2 class="h2">
+      Board name:
+      <input
+        :value="currentBoard.name"
+        class="input-bg"
+        @input="handleChange"
+      />
+    </h2>
     <h3>Columns:</h3>
     <BoardAllColumns :columns="currentBoard.columns" :board-id="boardId" />
     <form class="mt-4" @submit.prevent="addColumn">
@@ -37,7 +44,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions('sessionStorage', ['addColumnToBoard', 'addNewTask']),
+    ...mapActions('sessionStorage', [
+      'addColumnToBoard',
+      'addNewTask',
+      'changeBoardName',
+    ]),
     addColumn(e) {
       const newColumnID = this.$uuid.v4()
 
@@ -49,6 +60,12 @@ export default {
           id: newColumnID,
         })
       this.columnName = ''
+    },
+
+    handleChange(e) {
+      const newBoardName = e.target.value
+      this._.trim(newBoardName) &&
+        this.changeBoardName({ boardId: this.boardId, newName: newBoardName })
     },
   },
   computed: {
@@ -84,5 +101,11 @@ export default {
       width: 0;
     }
   }
+}
+
+.input-bg {
+  border-radius: 7px;
+  background: #efefef;
+  border: 1px #cacaca solid;
 }
 </style>

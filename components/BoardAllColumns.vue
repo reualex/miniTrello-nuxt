@@ -1,7 +1,16 @@
 <template>
   <ul v-if="columns && columns.length" class="flex overflow-x-auto">
     <li v-for="column in columns" :key="column.id" class="one-column">
-      <p>{{ column.name }}</p>
+      <div class="flex justify-between">
+        <p>{{ column.name }}</p>
+        <button
+          class="delete-btn"
+          type="button"
+          @click="deleteClick(column.id)"
+        >
+          X
+        </button>
+      </div>
 
       <hr class="border-indigo-100" />
       <AllTasks
@@ -16,6 +25,7 @@
 
 <script>
 import AllTasks from '~/components/AllTasks'
+import { mapActions } from 'vuex'
 export default {
   name: 'BoardAllColumns',
   props: {
@@ -29,6 +39,12 @@ export default {
     return {
       taskName: '',
     }
+  },
+  methods: {
+    ...mapActions('sessionStorage', ['removeColumn']),
+    deleteClick(columnId) {
+      this.removeColumn({ boardId: this.boardId, columnId })
+    },
   },
 }
 </script>

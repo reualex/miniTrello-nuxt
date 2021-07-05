@@ -13,9 +13,12 @@
                   Total columns: {{ board.columns.length }}
                 </p>
                 <p class="w-3/12">Total tasks: {{ getTotalTasks(board.id) }}</p>
-                <span class="delete-btn" @click.prevent="removeBoard(board.id)"
-                  >X</span
+                <button
+                  class="delete-btn"
+                  @click.prevent="removeBoard(board.id)"
                 >
+                  X
+                </button>
               </div>
             </v-card>
           </nuxt-link>

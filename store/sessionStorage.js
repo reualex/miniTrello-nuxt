@@ -8,6 +8,9 @@ export const actions = {
   addBoard({ commit }, newBoard) {
     commit('addBoard', newBoard)
   },
+  changeBoardName({ commit }, obj) {
+    commit('changeBoardName', obj)
+  },
   addColumnToBoard({ commit }, newColumn) {
     commit('addColumnToBoard', newColumn)
   },
@@ -17,6 +20,9 @@ export const actions = {
   removeBoard({ commit }, id) {
     commit('removeBoard', id)
   },
+  removeColumn({ commit }, columnObj) {
+    commit('removeColumn', columnObj)
+  },
   removeTask({ commit }, id) {
     commit('removeBoard', id)
   },
@@ -25,6 +31,13 @@ export const actions = {
 export const mutations = {
   addBoard(state, newBoard) {
     state.list.push(newBoard)
+  },
+  changeBoardName(state, obj) {
+    const currentBoard = state.list.find(
+      el => el.id?.toString() === obj.boardId?.toString()
+    )
+
+    currentBoard.name = obj.newName
   },
 
   addColumnToBoard(state, newColumn) {
@@ -37,6 +50,17 @@ export const mutations = {
   removeBoard(state, boardId) {
     const index = findIndex(state.list, el => el.id === boardId)
     state.list.splice(index, 1)
+  },
+  removeColumn(state, columnObj) {
+    const currentBoard = state.list.find(
+      el => el.id?.toString() === columnObj.boardId?.toString()
+    )
+    const index = findIndex(
+      currentBoard.columns,
+      el => el.id === columnObj.columnId
+    )
+
+    currentBoard.columns.splice(index, 1)
   },
 
   addNewTask(state, newTask) {
