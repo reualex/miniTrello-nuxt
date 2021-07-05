@@ -11,6 +11,9 @@ export const actions = {
   changeBoardName({ commit }, obj) {
     commit('changeBoardName', obj)
   },
+  changeColumnName({ commit }, obj) {
+    commit('changeColumnName', obj)
+  },
   addColumnToBoard({ commit }, newColumn) {
     commit('addColumnToBoard', newColumn)
   },
@@ -38,6 +41,14 @@ export const mutations = {
     )
 
     currentBoard.name = obj.newName
+  },
+  changeColumnName(state, obj) {
+    const currentColumn = this.getters['sessionStorage/getCurrentColumn'](
+      obj.boardId,
+      obj.columnId
+    )
+    console.log('!!currentColumn: ', currentColumn)
+    currentColumn.name = obj.newName
   },
 
   addColumnToBoard(state, newColumn) {
@@ -82,6 +93,12 @@ export const mutations = {
   },
   updateBoardList(state, { currentList }) {
     state.list = currentList
+  },
+  updateColumnList(state, { currentList, boardId }) {
+    let currrentBoard = state.list.find(
+      el => el.id?.toString() === boardId?.toString()
+    )
+    currrentBoard.columns = currentList
   },
 }
 
