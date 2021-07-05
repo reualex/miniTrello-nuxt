@@ -40,7 +40,6 @@ export default {
   },
   watch: {
     closeModalWindow(value) {
-      console.log('WATCH VALUE: ', value)
       if (value) {
         const bc = new BroadcastChannel('login_channel')
         bc.close()

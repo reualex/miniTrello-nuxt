@@ -47,7 +47,6 @@ export const mutations = {
       obj.boardId,
       obj.columnId
     )
-    console.log('!!currentColumn: ', currentColumn)
     currentColumn.name = obj.newName
   },
 

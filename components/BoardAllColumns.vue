@@ -70,7 +70,6 @@ export default {
       this.removeColumn({ boardId: this.boardId, columnId })
     },
     handleInput(e, columnId) {
-      console.log('!!!!!E ', e)
       this.changeColumnName({
         boardId: this.boardId,
         columnId,

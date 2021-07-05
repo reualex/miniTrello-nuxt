@@ -24,7 +24,6 @@ export const actions = {
 
 export const getters = {
   getLoginTypes: state => {
-    console.log('STATE', state)
     return state.appdata.loginTypes
   },
 }

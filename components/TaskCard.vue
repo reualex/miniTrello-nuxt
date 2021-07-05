@@ -11,10 +11,6 @@ export default {
   props: {
     task: { type: Object, default: () => {} },
   },
-
-  mounted() {
-    console.log('TASK: ', this.task)
-  },
 }
 </script>
 
