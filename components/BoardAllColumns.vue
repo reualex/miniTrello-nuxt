@@ -33,12 +33,4 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.delete-btn {
-  width: 32px;
-  height: 32px;
-  z-index: 20;
-  line-height: 32px;
-  text-align: center;
-}
-</style>
+<style lang="scss"></style>

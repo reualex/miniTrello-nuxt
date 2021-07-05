@@ -49,12 +49,7 @@ export default {
       boardName: '',
     }
   },
-  // mounted() {
-  //   if (window.opener) {
-  //     window.opener?.location.replace('/')
-  //     window.close()
-  //   }
-  // },
+
   computed: {
     ...mapGetters('sessionStorage', ['boardCount']),
   },

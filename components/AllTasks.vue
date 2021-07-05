@@ -1,12 +1,5 @@
 <template>
   <div class="flex flex-col">
-    <!-- <ul v-if="tasks.length" class="one-column-tasks">
-      <li v-for="task in tasks" :key="task.id" class="mb-3 cursor-pointer">
-        <v-card>
-          {{ task.name }}
-        </v-card>
-      </li>
-    </ul> -->
     <draggable
       v-model="myTasks"
       group="tasks"
@@ -19,7 +12,8 @@
         :key="task.id"
         class="cursor-pointer bg-white mb-2 border-2 rounded"
       >
-        {{ task.name }}
+        <!-- {{ task.name }} -->
+        <TaskCard :task="task" />
       </div>
     </draggable>
     <form class="task-form mt-auto" @submit.prevent="addTask(columnId)">
@@ -42,6 +36,7 @@
 <script>
 import draggable from 'vuedraggable'
 import BasicInput from '~/components/Common/BasicInput'
+import TaskCard from '~/components/TaskCard'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -53,6 +48,7 @@ export default {
   },
   components: {
     BasicInput,
+    TaskCard,
     draggable,
   },
   data() {
@@ -96,6 +92,26 @@ export default {
 
 <style lang="scss">
 .test-drag {
+  overflow-y: scroll;
   height: 450px;
+  padding: 20px 0;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  &:-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: linear-gradient(to left, #212121, #eceaea);
+    box-shadow: 0 0 1px 1px #111;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: linear-gradient(to left, #4a4a4a, #404040);
+    box-shadow: inset 0 0 1px 1px #191919;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to left, #555555, #4e4e4e);
+  }
 }
 </style>

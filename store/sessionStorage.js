@@ -17,6 +17,9 @@ export const actions = {
   removeBoard({ commit }, id) {
     commit('removeBoard', id)
   },
+  removeTask({ commit }, id) {
+    commit('removeBoard', id)
+  },
 }
 
 export const mutations = {
@@ -37,25 +40,24 @@ export const mutations = {
   },
 
   addNewTask(state, newTask) {
-    const currentBoard = state.list.find(
-      el => el.id?.toString() === newTask.boardId?.toString()
-    )
-    const currentColumn = currentBoard.columns.find(
-      col => col.id?.toString() === newTask.columnId
+    const currentColumn = this.getters['sessionStorage/getCurrentColumn'](
+      newTask.boardId,
+      newTask.columnId
     )
 
     currentColumn.tasks.push(newTask)
   },
 
   updateList(state, { tasks, boardId, columnId }) {
-    const currentBoard = state.list.find(
-      el => el.id.toString() === boardId.toString()
-    )
-    const currentColumn = currentBoard.columns.find(
-      el => el.id.toString() === columnId.toString()
+    const currentColumn = this.getters['sessionStorage/getCurrentColumn'](
+      boardId,
+      columnId
     )
 
     currentColumn.tasks = tasks
+  },
+  updateBoardList(state, { currentList }) {
+    state.list = currentList
   },
 }
 
@@ -79,7 +81,13 @@ export const getters = {
     return totalTasks
   },
 
-  getColumnTasks: state => (boardId, columnId) => {
+  getColumnTasks: (state, getters) => (boardId, columnId) => {
+    const currentColumn = getters.getCurrentColumn(boardId, columnId)
+
+    return currentColumn.tasks
+  },
+
+  getCurrentColumn: state => (boardId, columnId) => {
     const currentBoard = state.list.find(
       el => el.id.toString() === boardId.toString()
     )
@@ -87,6 +95,6 @@ export const getters = {
       el => el.id.toString() === columnId.toString()
     )
 
-    return currentColumn.tasks
+    return currentColumn
   },
 }
