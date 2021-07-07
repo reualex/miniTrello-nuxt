@@ -26,8 +26,8 @@ export const actions = {
   removeColumn({ commit }, columnObj) {
     commit('removeColumn', columnObj)
   },
-  removeTask({ commit }, id) {
-    commit('removeBoard', id)
+  removeTask({ commit }, taskObj) {
+    commit('removeTask', taskObj)
   },
 }
 
@@ -71,6 +71,15 @@ export const mutations = {
     )
 
     currentBoard.columns.splice(index, 1)
+  },
+  removeTask(state, taskObj) {
+    const currentColumn = this.getters['sessionStorage/getCurrentColumn'](
+      taskObj.boardId,
+      taskObj.columnId
+    )
+    const index = findIndex(currentColumn, el => el.id === taskObj.taskId)
+
+    currentColumn.tasks.splice(index, 1)
   },
 
   addNewTask(state, newTask) {

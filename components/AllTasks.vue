@@ -13,7 +13,12 @@
         class="cursor-pointer bg-white mb-2 border-2 rounded"
       >
         <!-- {{ task.name }} -->
-        <TaskCard :task="task" />
+        <TaskCard
+          :task="task"
+          :taskId="task.id"
+          :column-id="columnId"
+          :board-id="boardId"
+        />
       </div>
     </draggable>
     <form class="task-form mt-auto" @submit.prevent="addTask(columnId)">
