@@ -12,7 +12,6 @@
         :key="task.id"
         class="cursor-pointer bg-white mb-2 border-2 rounded"
       >
-        <!-- {{ task.name }} -->
         <TaskCard
           :task="task"
           :taskId="task.id"

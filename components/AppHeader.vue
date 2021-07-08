@@ -9,8 +9,8 @@
         <div v-if="$auth.loggedIn" class="flex items-center">
           <nuxt-link to="/profile">
             <AppAvatar
-              :link="$auth.user.picture || $auth.user.avatar_url"
-              :full-name="$auth.user.name || $auth.user.login"
+              :link="avatarLink"
+              :full-name="getFullName"
               class="avatar_sm mr-4"
             />
           </nuxt-link>
@@ -33,6 +33,17 @@ export default {
   name: 'AppHeader',
   components: {
     AppAvatar,
+  },
+  computed: {
+    user() {
+      return this.$auth.user
+    },
+    avatarLink() {
+      return this.user.picture || this.user.avatar_url
+    },
+    getFullName() {
+      return this.user.name || this.user.login || '-'
+    },
   },
 }
 </script>
