@@ -80,12 +80,12 @@ export default {
       login: '/login',
       callback: '/callback',
       logout: '/login',
+      home: '/',
     },
   },
 
   env: {
     VUE_APP_GOOGLE_CLIENT_ID: process.env.VUE_APP_GOOGLE_CLIENT_ID,
-    VUE_APP_GOOGLE_CLIENT_SECRET: process.env.VUE_APP_GOOGLE_CLIENT_SECRET,
 
     VUE_APP_GIT_CLIENT_ID: process.env.VUE_APP_GIT_CLIENT_ID,
     VUE_APP_GIT_CLIENT_SECRET: process.env.VUE_APP_GIT_CLIENT_SECRET,

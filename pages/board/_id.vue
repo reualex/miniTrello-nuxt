@@ -31,6 +31,7 @@ import BoardAllColumns from '~/components/BoardAllColumns'
 import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'CurrentBoard',
+  middleware: 'auth',
   components: {
     BasicInput,
     BoardAllColumns,
@@ -44,11 +45,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('sessionStorage', [
-      'addColumnToBoard',
-      'addNewTask',
-      'changeBoardName',
-    ]),
+    ...mapActions('sessionStorage', ['addColumnToBoard', 'changeBoardName']),
     addColumn(e) {
       const newColumnID = this.$uuid.v4()
 

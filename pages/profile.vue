@@ -6,14 +6,11 @@
       <v-card elevation="2">
         <div class="profile-form-container">
           <div class="w-max mb-4 mx-auto">
-            <AppAvatar
-              :link="$auth.user.picture || $auth.user.avatar_url"
-              :full-name="$auth.user.name || $auth.user.login"
-            />
+            <AppAvatar :link="avatarLink" :full-name="getFullName" />
           </div>
           <div class="profile-form-filed mb-8">
             <p class="mr-4">Your name:</p>
-            <p>{{ getName }}</p>
+            <p>{{ getFullName }}</p>
           </div>
           <div class="profile-form-filed mb-8">
             <p class="mr-4">Your email:</p>
@@ -38,14 +35,20 @@ export default {
     AppAvatar,
   },
   computed: {
-    getName() {
-      return this.$auth.user.name || '-'
+    user() {
+      return this.$auth.user
+    },
+    getFullName() {
+      return this.user.name || this.user.login || this.user.name || '-'
     },
     getEmail() {
-      return this.$auth.user.email || '-'
+      return this.user.email || '-'
     },
     getLogin() {
-      return this.$auth.user.login || '-'
+      return this.user.login || '-'
+    },
+    avatarLink() {
+      return this.user.picture || this.user.avatar_url
     },
   },
 }

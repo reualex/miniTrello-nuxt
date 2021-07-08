@@ -44,9 +44,6 @@ export default {
         const bc = new BroadcastChannel('login_channel')
         bc.close()
         this.openWindow.close()
-        // don't work $router.push
-        // this.$router.push('/')
-        window.location.replace('/')
       }
     },
   },
@@ -67,9 +64,6 @@ export default {
       // [x] TODO: URL query
       this.openWindow = window.open(routeData.href, '_blank', params)
     },
-  },
-  mounted() {
-    this.$auth.loggedIn && this.$router.push('/')
   },
 }
 </script>
